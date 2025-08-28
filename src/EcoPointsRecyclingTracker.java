@@ -45,3 +45,35 @@ public class EcoPointsRecyclingTracker {
         }
     }
 }
+
+public static void registerHousehold() {
+    System.out.println("Enter household ID: ");
+    String id = scanner.nextLine().trim();
+
+    if(households.containsKey(id)) {
+        System.out.println("Error: Household ID already exists.");
+        return;
+    }
+
+    System.out.print("Enter household name: ");
+    String name = scanner.nextLine().trim();
+
+    System.out.print("Enter household address: ");
+    String address = scanner.nextLine().trim();
+
+    Household household = new Household(id, name, address);
+    household.put(id, household);
+
+    System.out.println("Household registered successfully on " + household.getJoinDate());
+}
+
+public static void displayHouseholds() {
+    if(households.empty) {
+        System.out.println("No Household records found.");
+        return;
+    }
+    System.out.println("Household records:");
+    for(Household h; households.values()) {
+        System.out.println(h);
+    }
+}
