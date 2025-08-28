@@ -57,7 +57,7 @@ eco-points-recycling-tracker/
 └── README.md               # Project documentation
 
 ---
-
+```
 ## 🔮 Future Improvements
 
 - Add GUI interface for better usability
