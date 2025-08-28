@@ -148,3 +148,41 @@ private static void displayHouseholdEvents() {
         System.out.println("Total Points: " + household.getTotalPoints() + " pts");
     }
 }
+
+private static void generateReports() {
+    if(households.isEmpty) {
+        System.out.println("No Household records found.");
+        return;
+    }
+
+    Household top = null;
+    for (Household h : households.values()) {
+        if (top == null || h.getTotalPoints() > top.getTotalPoints()) {
+            top = h;
+        }
+    }
+
+    System.out.println("\nHousehold with Highest Points:");
+    System.out.println("ID: " + top.getId() +
+            ", Name: " + top.getName() +
+            ", Points: " + top.getTotalPoints());
+
+    double totalWeight = 0.0;
+
+    for (Household h : households.values()) {
+        totalWeight += h.getTotalWeight();
+    }
+
+    System.out.println("Total Community Recycling Weight: " + totalWeight + " kg");
+}
+
+private static void loadHouseholdsFromFile() {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("households.ser"))) {
+        households = (Map<String, Household>) in.readObject();
+        System.out.println("Household data loaded.");
+    } catch (FileNotFoundException e) {
+        System.out.println("No saved data found. Starting fresh.");
+    } catch (IOException | ClassNotFoundException e) {
+        System.out.println("Error loading data: " + e.getMessage());
+    }
+}
