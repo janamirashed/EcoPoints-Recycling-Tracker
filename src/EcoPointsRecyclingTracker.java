@@ -77,3 +77,74 @@ public static void displayHouseholds() {
         System.out.println(h);
     }
 }
+
+public static void saveHouseholdsToFile() {
+    try {
+        ObjectOutoutStream out = new ObjectOutoutStream(new FileOutputStream("households.ser"));
+        out.writeObject(households);
+    } catch (IOException e) {
+        System.out.println("Error saving data: " + e.getMessage());
+    }
+}
+
+public static void logRecyclingEvent() {
+    System.out.println("Enter household ID: ");
+    String id = scanner.nextLine().trim();
+
+    Household household = households.get(id);
+    if(household == null) {
+        System.out.println("Error: Household ID does not exist.");
+        return;
+    }
+    System.out.print("Enter material type (plastic/glass/metal/paper): ");
+    String material = scanner.nextLine().trim();
+    double weight = 0.0;
+
+    while (true) {
+        System.out.print("Enter weight in kilograms: ");
+        String input = scanner.nextLine();
+
+        try {
+            weight = Double.parseDouble(input);
+
+            if (weight <= 0) {
+                System.out.println("Invalid weight. Must be a positive number.");
+                continue;
+            }
+
+            break;
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid weight. Must be a positive number.");
+        }
+    }
+
+    RecyclingEvent event = new RecyclingEvent(material, weight);
+    household.addEvent(event);
+
+    System.out.println("Recycling event logged! Points earned: " + event.getEcoPoints());
+}
+
+private static void displayHouseholdEvents() {
+    System.out.print("Enter household ID: ");
+    String id = scanner.nextLine().trim();
+
+    Household household = households.get(id);
+
+    if (household == null) {
+        System.out.println("Household not found.");
+        return;
+    }
+
+    System.out.println("\nRecycling Events for " + household.getName() + ":");
+    if (household.getEvents().isEmpty()) {
+        System.out.println("No events logged.");
+    } else {
+        for (RecyclingEvent e : household.getEvents()) {
+            System.out.println(e);
+        }
+
+        System.out.println("Total Weight: " + household.getTotalWeight() + " kg");
+        System.out.println("Total Points: " + household.getTotalPoints() + " pts");
+    }
+}
