@@ -64,7 +64,6 @@ eco-points-recycling-tracker/
 - Export reports to CSV or JSON
 - Add a leaderboard for multiple households
 - Validate material input with strict options
-- Add authentication for secure access
 - Add notifications or reminders for households to log recycling events
 - Implement unit tests for better code reliability
 - Enhance reports with charts or visual summaries
